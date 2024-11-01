@@ -38,7 +38,6 @@ class Command(BaseCommand):
         data.seniors = options.get("senior", 0)
         if options.get("special", False):
             data.plan = "SPECIAL"
-        # dt = datetime.datetime(2024, 11, 4, 16, 50, 0)
 
         # 合計人数
         data.total = data.adults + data.childs + data.seniors
