@@ -1,0 +1,20 @@
+version: '3'
+services:
+  python:
+    container_name: django
+    build:
+      context: ./docker/python
+    volumes:
+      - './src/worksample:/src/worksample'
+    ports:
+      - '8080:8000'
+    tty: true
+  node:
+    container_name: vue
+    build:
+      context: ./docker/node
+    volumes:
+      - './src/html:/src/html'
+    ports:
+      - '3000:3000'
+    tty: true
