@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import type { Images } from "@/types/images";
 
 const images = ref<Images[]>([])
+const api_url: string = 'https://httpbin.org/get'
+
+onMounted(async () => {
+  await nextTick()
+  await getImage()
+})
+
+const getImage = async () => await useFetch(api_url).then(res => {
+  console.log(res.data.value)
+  setImages([])
+})
+
 const setImages = (_images: Images[]) => {
   images.value = _images
 }

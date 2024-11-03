@@ -7,7 +7,6 @@ interface Props {
 
 const props = defineProps<Props>();
 const saved = ref<boolean>(false)
-const api_url = ref<string>('https://httpbin.org/post')
 
 const storeImages = async () => {
     try {
@@ -19,7 +18,7 @@ const storeImages = async () => {
             formData.append(`images[${index}][position]`, image.position.toString());
             formData.append(`images[${index}][file]`, image.file);
         });
-
+        const api_url: string = 'https://httpbin.org/post'
         const response = await useFetch(api_url, {
             method: 'POST',
             body: formData,
