@@ -5,14 +5,12 @@ import type { Images } from "@/types/images";
 interface Emits {
   (e: "setImages", images: Images[]): void;
 }
-
 interface Props {
   images: Images[];
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
-
 const uploadInput = ref<HTMLInputElement>();
 const _images = ref<Images[]>(props.images);
 

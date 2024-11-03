@@ -3,12 +3,10 @@ import { ref } from "vue"
 import type { Images } from "@/types/images";
 
 const images = ref<Images[]>([])
-
 const setImages = (_images: Images[]) => {
   images.value = _images
 }
 </script>
-
 
 <template>
   <v-container>
