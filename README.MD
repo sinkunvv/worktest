@@ -42,3 +42,8 @@ python manage.py test app
 ```
 
 
+### HTML Worksample実行
+
+```
+npm run dev
+```
