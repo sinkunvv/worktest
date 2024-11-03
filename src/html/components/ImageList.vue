@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Images, Menus } from "@/types/images";
+import type { Images } from "@/types/images";
 interface Emits {
   (e: "setImages", images: Images[]): void;
 }
@@ -9,11 +9,44 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
-
 const _images = ref<Images[]>(props.images);
 
+/**
+ * 画像を1つ左に移動
+ * @param index number
+ */
+const leftShift = (index: number) => {
+  if (index == 0) return
+  const target = _images.value[index]
+  _images.value[index].position--
+  _images.value[index - 1].position++
+  _images.value.splice(index, 1)
+  _images.value.splice(index - 1, 0, target)
+  emit("setImages", _images.value);
+}
+
+/**
+ * 画像を1つ右に移動
+ * @param index number
+ */
+const rightShift = (index: number) => {
+  const len = _images.value.length - 1
+  if (index == len) return
+  const target = _images.value[index]
+  _images.value[index].position++
+  _images.value[index + 1].position--
+  _images.value.splice(index, 1)
+  _images.value.splice(index + 1, 0, target)
+  emit("setImages", _images.value);
+}
+
+/**
+ * 画像削除
+ * @param index number
+ */
 const deleteImage = (index: number) => {
   _images.value.splice(index, 1);
+  _images.value.map((image, index) => { image.position = index })
   emit("setImages", _images.value);
 }
 
@@ -29,14 +62,14 @@ const deleteImage = (index: number) => {
               <v-btn class="setting-menu" color="grey-darken-3" v-bind="props">設定</v-btn>
             </template>
             <v-list density="compact">
-              <v-list-item>
+              <v-list-item @click="rightShift(index)">
                 <template v-slot:prepend>
                   <v-icon class="mr-n5" icon="mdi-arrow-right-thick"></v-icon>
                 </template>
                 <v-list-item-title>右に移動</v-list-item-title>
               </v-list-item>
               <v-divider />
-              <v-list-item @click="console.log('aaaa')">
+              <v-list-item @click="leftShift(index)">
                 <template v-slot:prepend>
                   <v-icon class="mr-n5" icon="mdi-arrow-left-thick"></v-icon>
                 </template>
